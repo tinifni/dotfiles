@@ -30,7 +30,7 @@ setopt prompt_subst
 #%{$fg_bold[yellow]%}↳  '
 PROMPT='
 %{$reset_color%}%{$fg[blue]%}%~ %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%} %E
-#  '
+%#  '
 #PROMPT='
 #%(?..[%?])%j %{$fg[green]%}%t%{$fg[blue]%} %~ %{$fg[blue]%} %E
 #%{$reset_color%}%# '
