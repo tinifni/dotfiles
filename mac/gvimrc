@@ -39,7 +39,7 @@
   imap <D-[> <C-O><<
 
   set lines=70
-  set columns=150
+  set columns=130
 
 " bind command-option-l to toggle line numbers
   nmap <silent> <D-M-l> :set invnumber<CR>
@@ -58,3 +58,6 @@
 
 " Run file in shell mode with ruby
   nnoremap <D-r> :Shell ruby %<cr>
+
+" Add *.less filetype
+  autocmd BufNewFile, BufRead *.less set filetype less

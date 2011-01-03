@@ -14,6 +14,7 @@ bind + resize +1
 bind - resize -1
 
 # Testing New Stuff
+shell zsh
 activity "%"
 crlf off
 defmonitor on

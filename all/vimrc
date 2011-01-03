@@ -182,6 +182,9 @@
 " Add pathogen dependencies because mixed up stuff is mixed up
   call pathogen#runtime_append_all_bundles()
 
+" Add *.less filetype
+  autocmd BufNewFile, BufRead *.less set filetype less
+
   nnoremap <Leader>ff :FuzzyFinderTextMateRefreshFiles<CR>:FuzzyFinderTextMate<CR>
   nnoremap <Leader>rl :%s/^\n\+/\r/<CR>:nohls<CR>
 

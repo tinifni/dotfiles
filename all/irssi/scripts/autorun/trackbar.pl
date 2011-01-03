@@ -27,12 +27,17 @@
 #
 # Authors:
 #   - Main maintainer & author: Peter 'kinlo' Leurs
-#   - Many thanks to Timo 'cras' Sirainen for putting me on the way
-#   - UTF-8 patches by Johan 'Ion' Kiviniemi
+#   - Many thanks to Timo 'cras' Sirainen for placing me on my way
 #   - on-upgrade-remove-line patch by Uwe Dudenhoeffer
 #
 # Version history:
-#  1.4[nei] - fix for irssi 0.8.10 & better utf8 handling
+#  1.4: - Changed our's by my's so the irssi script header is valid
+#       - Removed utf-8 support.  In theory, the script should work w/o any
+#         problems for utf-8, just set trackbar_string to a valid utf-8 character
+#         and everything *should* work.  However, this script is being plagued by
+#         irssi internal bugs.  The function Irssi::settings_get_str does NOT handle
+#         unicode strings properly, hence you will notice problems when setting the bar
+#         to a unicode char.  For changing your bar to utf-8 symbols, read the line sub.
 #  1.3: - Upgrade now removes the trackbars. 
 #       - Some code cleanups, other defaults
 #       - /mark sets the line to the bottom
@@ -42,12 +47,21 @@
 #  1.1: - Fixed bug when closing window
 #  1.0: - Initial release
 #
+#
+#  Call for help!
+#
+#  There is a trackbar version 2.0 that properly handles resizes and immediate config change
+#  activation.  However, there is/are some bug(s) in irssi's main buffer/window code that causes
+#  irssi to 'forget' lines, which is ofcourse completly unaccepteable.  I haven't found the time
+#  nor do I know the irssi's internals enough to find and fix this bug, if you want to help, please
+#  contact me, I'll give you a copy of the 2.0 version that will immediatly show you the problems.
+#
 # Known bugs:
 #  - if you /clear a window, it will be uncleared when returning to the window
-#    This is probably a bug in irssi
+#  - UTF-8 characters in the trackbar_string doesnt work.  This is an irssi bug.
 #  - if you resize your irssi (in xterm or so) the bar is not resized 
-#    (but will be on leaving the channel)
 #  - changing the trackbar style is only visible after returning to a window
+#  however, changing style/resize takes in effect after you left the window.
 #
 # Whishlist/todo:
 #  - instead of drawing a line, just invert timestamp or something, 
@@ -64,14 +78,13 @@
 # to get it added :p
 
 use strict;
-#use 5.6.1;
-use utf8;
+use 5.6.1;
 use Irssi;
 use Irssi::TextUI;
 
-our $VERSION = "1.4";
+my $VERSION = "1.4";
 
-our %IRSSI = (
+my %IRSSI = (
     authors     => "Peter 'kinlo' Leurs",
     contact     => "peter\@pfoe.be",
     name        => "trackbar",
@@ -81,13 +94,9 @@ our %IRSSI = (
     changed     => "Thu Feb 20 16:18:08 2003",
 );
 
-our %config;
-$config{'term_utf8'} = #undef;
-	lc(Irssi::settings_get_str('term_charset')) eq 'utf-8';
+my %config;
 
-# UTF-8 char 9476 is "box drawings light triple dash horizontal".
-Irssi::settings_add_str('trackbar',
-    'trackbar_string' => $config{'term_utf8'} ? pack('U*', 0x2500) : '-');
+Irssi::settings_add_str('trackbar', 'trackbar_string' => '-');
 $config{'trackbar_string'} = Irssi::settings_get_str('trackbar_string');
 
 Irssi::settings_add_str('trackbar', 'trackbar_style' => '%K');
@@ -95,8 +104,6 @@ $config{'trackbar_style'} = Irssi::settings_get_str('trackbar_style');
 
 Irssi::signal_add(
     'setup changed' => sub {
-        $config{'term_utf8'} = #undef;
-			  lc(Irssi::settings_get_str('term_charset')) eq 'utf-8';
         $config{'trackbar_string'} = Irssi::settings_get_str('trackbar_string');
         $config{'trackbar_style'}  = Irssi::settings_get_str('trackbar_style');
         if ($config{'trackbar_style'} =~ /(?<!%)[^%]|%%|%$/) {
@@ -126,7 +133,9 @@ sub line {
     my $string = $config{'trackbar_string'};
     $string = '-' unless defined $string;
 
-    # This is a horrible kludge. I guess this is Irssi's bug:
+    # There is a bug in irssi's utf-8 handling on config file settings, as you 
+    # can reproduce/see yourself by the following code sniplet:
+    #
     #   my $quake = pack 'U*', 8364;    # EUR symbol
     #   Irssi::settings_add_str 'temp', 'temp_foo' => $quake;
     #   Irssi::print length $quake;
@@ -134,21 +143,17 @@ sub line {
     #   Irssi::print length Irssi::settings_get_str 'temp_foo';
     #       # prints 3
     #
-    # According to perlunicode(1), "Beginning with version 5.6, Perl uses
-    # logically wide characters to represent strings internally. This internal
-    # representation of strings uses the UTF-8 encoding."
-    # Maybe Irssi::settings_get_str() should return stuff in that "internal
-    # UTF-8 representation"?
-    if ($config{'term_utf8'}) {
-		 #$string = pack 'U*', unpack 'U*', $string;
-		 eval {
-				no warnings;
-				require Encode;
-				Encode::_utf8_on($string);
-			};
-    }
+    #
+    # Trackbar used to have a workaround, but on recent versions of perl/irssi
+    # it does no longer work.  Therefore, if you want your trackbar to contain
+    # unicode characters, uncomment the line below for a nice full line, or set
+    # the string to whatever char you want.
+
+    # $string = pack('U*', 0x2500);
+
 
     my $length = length $string;
+
     if ($length == 0) {
         $string = '-';
         $length = 1;

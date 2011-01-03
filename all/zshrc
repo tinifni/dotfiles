@@ -5,7 +5,7 @@ zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' menu select=0
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle :compinstall filename '/home/scudco/.zshrc'
+zstyle :compinstall filename '/home/justin/.zshrc'
 
 autoload -Uz compinit
 compinit
@@ -25,10 +25,18 @@ git_prompt_info() {
       echo "(${ref#refs/heads/})"
 }
 setopt prompt_subst
+#PROMPT='
+#%{$reset_color%}%{$fg_bold[blue]%}%~ %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%} %E
+#%{$fg_bold[yellow]%}↳  '
 PROMPT='
-%{$reset_color%}%{$fg_bold[magenta]%}%~ %{$fg_bold[yellow]%}$(git_prompt_info)%{$reset_color%} %E
-%{$fg_bold[yellow]%}↳  '
-RPROMPT="%{$fg_bold[yellow]%}◴ %t%{$reset_color%}"
+%{$reset_color%}%{$fg[blue]%}%~ %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%} %E
+#  '
+#PROMPT='
+#%(?..[%?])%j %{$fg[green]%}%t%{$fg[blue]%} %~ %{$fg[blue]%} %E
+#%{$reset_color%}%# '
+#RPROMPT="%{$fg_bold[green]%}◴ %t%{$reset_color%}"
+RPROMPT="%{$fg_bold[green]%}◴ %t%{$reset_color%}"
+#RPROMPT='%{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}'
 export VISUAL=/usr/bin/vim
 
 function title {
@@ -52,7 +60,7 @@ function preexec {
   title $cmd[1]:t "$cmd[2,-1]"
 }
 
-export PATH=~/bin:~/.seeds/bin:/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=~/bin:/usr/local/bin:$PATH
 
 # ALIASES
 alias ls='ls -G'
@@ -72,38 +80,20 @@ alias screens='ss screens -c ~/.screens'
 alias visor='ss visor -c ~/.visor_screens'
 alias inbox='cd ~/inbox'
 alias node-repl="rlwrap node-repl"
-define() { wn $* -over; }
-alias gvim='mvim'
+alias gvim="mvim"
+alias gv="mvim"
+alias sshtbx="ssh -p 60322 tinifni@209.20.65.87"
 
 #ruby
+alias speco='spec -O spec/spec.opts'
+alias gemi='gem install --no-ri --no-rdoc'
+
+#Ruby on Rails
 alias r='rails'
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+#Screeninator
+EDITOR='vim'
+if [[ -s $HOME/.screeninator/scripts/screeninator ]] ; then source $HOME/.screeninator/scripts/screeninator ; fi
 
-source ~/.git-flow-completion.zsh
-
-# Thank you http://twistedmind.com/bundle-exec-bash-shortcut
-bundle_commands=( spec rspec cucumber cap watchr rails rackup autotest heroku )
-
-function run_bundler_cmd () {
-    if [ -e ./Gemfile ]; then
-        echo "bundle exec $@"
-        bundle exec $@
-    else
-        echo "$@"
-        $@
-    fi
-}
-
-for cmd in $bundle_commands
-do
-    alias $cmd="run_bundler_cmd $cmd"
-done
-# End thank you
-
-# Ruby Enterprise Edition Settings
-export RUBY_HEAP_MIN_SLOTS=3000000
-export RUBY_HEAP_SLOTS_INCREMENT=1000000
-export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
-export RUBY_GC_MALLOC_LIMIT=1000000000
-export RUBY_HEAP_FREE_MIN=500000
+#Ruby Version Manager
+if [[ -s /Users/justin/.rvm/scripts/rvm ]] ; then source /Users/justin/.rvm/scripts/rvm ; fi
