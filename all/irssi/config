@@ -289,9 +289,9 @@ statusbar = {
 };
 
 #keyboard = (
-  #{ key = "insert"; id = "command"; data = "/window grow 1"; },
-  #{ key = "delete"; id = "command"; data = "/window shrink 1"; },
-  #{ key = "meta-delete"; id = "delete_previous_word"; data = ""; }
+#{ key = "insert"; id = "command"; data = "/window grow 1"; },
+#{ key = "delete"; id = "command"; data = "/window shrink 1"; },
+#{ key = "meta-delete"; id = "delete_previous_word"; data = ""; }
 #);
 
 settings = {
@@ -308,8 +308,9 @@ settings = {
     #window_auto_change = "no";
     #window_check_level_first = "yes";
     #window_history = "yes";
+    theme = "dot";
   };
-  core = {
+  core = { 
     real_name = "tinifni";
     user_name = "tinifni";
     nick = "tinifni";
@@ -317,25 +318,25 @@ settings = {
   "fe-text" = { actlist_sort = "refnum"; };
 };
 #windows = {
-  #2 = {
-    #items = (
-      #{
-        #type = "CHANNEL";
-        #chat_type = "IRC";
-        #name = "#testje";
-        #tag = "freenode";
-      #}
-    #);
-    #sticky = "yes";
-  #};
-  #1 = {
-    #name = "(status)";
-    #level = "CRAP NOTICES SNOTES CTCPS JOINS PARTS QUITS KICKS MODES TOPICS WALLOPS NICKS CLIENTNOTICES CLIENTCRAP CLIENTERRORS HILIGHTS";
-    #sticky = "yes";
-    #scroll = "yes";
-  #};
+#2 = {
+#items = (
+#{
+#type = "CHANNEL";
+#chat_type = "IRC";
+#name = "#testje";
+#tag = "freenode";
+#}
+#);
+#sticky = "yes";
+#};
+#1 = {
+#name = "(status)";
+#level = "CRAP NOTICES SNOTES CTCPS JOINS PARTS QUITS KICKS MODES TOPICS WALLOPS NICKS CLIENTNOTICES CLIENTCRAP CLIENTERRORS HILIGHTS";
+#sticky = "yes";
+#scroll = "yes";
+#};
 #};
 #mainwindows = {
-  #2 = { first_line = "13"; lines = "35"; };
-  #1 = { first_line = "0"; lines = "13"; };
+#2 = { first_line = "13"; lines = "35"; };
+#1 = { first_line = "0"; lines = "13"; };
 #};
