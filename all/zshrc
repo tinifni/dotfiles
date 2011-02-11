@@ -83,6 +83,7 @@ alias node-repl="rlwrap node-repl"
 alias gvim="mvim"
 alias gv="mvim"
 alias sshtbx="ssh -p 60322 tinifni@209.20.65.87"
+alias sshec2="ssh -i ~/.ssh/minecraft-security.pem ec2-user@204.236.140.232"
 
 #ruby
 alias speco='spec -O spec/spec.opts'
