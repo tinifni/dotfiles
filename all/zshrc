@@ -60,7 +60,7 @@ function preexec {
   title $cmd[1]:t "$cmd[2,-1]"
 }
 
-export PATH=~/bin:/usr/local/bin:$PATH
+export PATH=~/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 # ALIASES
 alias ls='ls -G'

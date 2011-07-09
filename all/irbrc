@@ -58,9 +58,9 @@ extend_console 'wirble' do
   Wirble.colorize
 end
 
-extend_console 'soma' do
-  Soma.start
-end
+#extend_console 'soma' do
+#  Soma.start
+#end
 
 # Hirb makes tables easy.
 extend_console 'hirb' do
