@@ -38,6 +38,14 @@ servers = (
     port = "6667";
     use_ssl = "no";
     ssl_verify = "no";
+    autoconnect = "no";
+  },
+  {
+    address = "irc.esper.net";
+    chatnet = "Esper";
+    port = "6667";
+    use_ssl = "no";
+    ssl_verify = "no";
     autoconnect = "yes";
   }
 );
@@ -127,10 +135,17 @@ chatnets = {
     max_msgs = "3";
     max_whois = "30";
   };
+  Esper = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "3";
+    max_whois = "30";
+  };
 };
 
 channels = ( 
-  { name = "#BigT"; chatnet = "quakenet"; autojoin = "Yes"; }
+  { name = "#BigT"; chatnet = "quakenet"; autojoin = "yes"; },
+  { name = "#MiddleEarth"; chatnet = "esper"; autojoin = "yes"; }
 );
 
 aliases = {
