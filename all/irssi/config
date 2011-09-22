@@ -43,8 +43,8 @@ servers = (
   {
     address = "irc.esper.net";
     chatnet = "Esper";
-    port = "6667";
-    use_ssl = "no";
+    port = "6697";
+    use_ssl = "yes";
     ssl_verify = "no";
     autoconnect = "yes";
   }
